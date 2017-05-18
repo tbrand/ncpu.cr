@@ -2,7 +2,7 @@ require "./spec_helper"
 
 describe Ncpu do
 
-  it "works" do
-    true.should eq(true)
+  it "lower_bound" do
+    (Ncpu.get() >= 0).should be_true
   end
 end
