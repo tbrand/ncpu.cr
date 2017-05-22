@@ -5,8 +5,8 @@ module Ncpu
     {% if flag?(:linux) && flag?(:x86_64) %}
       set = uninitialized LibC::CpuSetT
       if LibC.sched_getaffinity(0, sizeof(LibC::CpuSetT), pointerof(set)) == 0
-        ret : LibC::Long = 0_i64
-        ptr = (pointerof(set)).as(LibC::Long*)
+        ret : LibC::ULong = 0_u64
+        ptr = (pointerof(set)).as(LibC::ULong*)
         asm("popcntq %rdi, %rax" : "={rax}"(ret) : "{rdi}"(ptr.value))
         return ret
       else
