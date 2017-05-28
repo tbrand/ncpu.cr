@@ -2,7 +2,7 @@ lib LibC
   {% if flag?(:linux) %}
     {% if flag?(:x86_64) %}
       struct CpuSetT
-        bits : Long[16]
+        bits : ULong[16]
       end
       fun sched_getaffinity(pid : LibC::PidT, cpusetsize: LibC::SizeT,
           mask : LibC::CpuSetT*) : LibC::Int

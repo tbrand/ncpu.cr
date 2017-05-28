@@ -6,8 +6,11 @@ module Ncpu
       set = uninitialized LibC::CpuSetT
       if LibC.sched_getaffinity(0, sizeof(LibC::CpuSetT), pointerof(set)) == 0
         ret : LibC::ULong = 0_u64
-        ptr = (pointerof(set)).as(LibC::ULong*)
-        asm("popcntq %rdi, %rax" : "={rax}"(ret) : "{rdi}"(ptr.value))
+        set.bits.each do |i|
+          count : LibC::ULong = 0_u64
+          asm("popcntq $1, $0" : "=r"(count) : "r"(i))
+          ret += count
+        end
         return ret
       else
         LibC.sysconf(LibC::SC_NPROCESSORS_ONLN)
