@@ -15,7 +15,7 @@ module Ncpu
       else
         LibC.sysconf(LibC::SC_NPROCESSORS_ONLN)
       end
-    {% elsif flag?(:linux) || flag?(:darwin) %}  # or Solaris
+    {% elsif flag?(:linux) || flag?(:darwin) || flag?(:freebsd) %}  # or Solaris
        LibC.sysconf(LibC::SC_NPROCESSORS_ONLN)
     {% else %}
       {{ raise "Don't know how to count N CPUs on this machine." }}
